@@ -1,4 +1,4 @@
-package com.myfirstandroidjava.salesapp;
+package com.myfirstandroidjava.salesapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.myfirstandroidjava.salesapp.R;
 import com.myfirstandroidjava.salesapp.model.LoginResponse;
 import com.myfirstandroidjava.salesapp.model.RegisterRequest;
-import com.myfirstandroidjava.salesapp.network.ApiService;
+import com.myfirstandroidjava.salesapp.network.AuthAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
 
 import retrofit2.Call;
@@ -24,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editTextUsername, editTextEmail, editTextPassword, editTextPhone, editTextAddress;
     private Button buttonRegister;
     private TextView textViewLogin;
-    private ApiService apiService;
+    private AuthAPIService authAPIService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister);
         textViewLogin = findViewById(R.id.textViewLogin);
 
-        apiService = RetrofitClient.getClient().create(ApiService.class);
+        authAPIService = RetrofitClient.getClient().create(AuthAPIService.class);
 
         buttonRegister.setOnClickListener(v -> registerUser());
 
@@ -62,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         RegisterRequest registerRequest = new RegisterRequest(username, password, email, phone, address);
-        apiService.registerUser(registerRequest).enqueue(new Callback<LoginResponse>() {
+        authAPIService.registerUser(registerRequest).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

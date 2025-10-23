@@ -1,4 +1,4 @@
-package com.myfirstandroidjava.salesapp;
+package com.myfirstandroidjava.salesapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.myfirstandroidjava.salesapp.R;
 import com.myfirstandroidjava.salesapp.model.LoginRequest;
 import com.myfirstandroidjava.salesapp.model.LoginResponse;
-import com.myfirstandroidjava.salesapp.network.ApiService;
+import com.myfirstandroidjava.salesapp.network.AuthAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
 
 import retrofit2.Call;
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextUsername;
     private EditText editTextPassword;
-    private ApiService apiService;
+    private AuthAPIService authAPIService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         Button buttonLogin = findViewById(R.id.buttonLogin);
         TextView textViewRegister = findViewById(R.id.textViewRegister);
 
-        apiService = RetrofitClient.getClient().create(ApiService.class);
+        authAPIService = RetrofitClient.getClient().create(AuthAPIService.class);
 
         buttonLogin.setOnClickListener(v -> loginUser());
 
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         LoginRequest loginRequest = new LoginRequest(username, password);
-        apiService.loginUser(loginRequest).enqueue(new Callback<LoginResponse>() {
+        authAPIService.loginUser(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
