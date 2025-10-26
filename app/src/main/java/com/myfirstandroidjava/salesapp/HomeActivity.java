@@ -2,72 +2,68 @@ package com.myfirstandroidjava.salesapp;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myfirstandroidjava.salesapp.adapters.ProductAdapter;
-import com.myfirstandroidjava.salesapp.models.ProductItem;
-import com.myfirstandroidjava.salesapp.models.ProductListResponse;
-import com.myfirstandroidjava.salesapp.network.ProductAPIService;
-import com.myfirstandroidjava.salesapp.network.RetrofitClient;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.myfirstandroidjava.salesapp.fragments.AlertFragment;
+import com.myfirstandroidjava.salesapp.fragments.CartFragment;
+import com.myfirstandroidjava.salesapp.fragments.ChatFragment;
+import com.myfirstandroidjava.salesapp.fragments.MapFragment;
+import com.myfirstandroidjava.salesapp.fragments.ShopFragment;
 
 public class HomeActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private ProgressBar progressBar;
-    private ProductAdapter adapter;
-    private ProductAPIService productAPIService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        recyclerView = findViewById(R.id.recyclerViewProducts);
-        progressBar = findViewById(R.id.progressBar);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        productAPIService = RetrofitClient.getClient().create(ProductAPIService.class);
-
-        loadProducts();
+        // Default: open Shop (Home) page
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new ShopFragment())
+                .commit();
     }
 
-    private void loadProducts() {
-        progressBar.setVisibility(View.VISIBLE);
+    private boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
 
-        Call<ProductListResponse> call = productAPIService.getProducts(1, 10);
-        call.enqueue(new Callback<ProductListResponse>() {
-            @Override
-            public void onResponse(Call<ProductListResponse> call, Response<ProductListResponse> response) {
-                progressBar.setVisibility(View.GONE);
-                Log.d("API_DEBUG", "Response code: " + response.code());
-                Log.d("API_DEBUG", "Raw body: " + response.raw());
-                Log.d("API_DEBUG", "Error body: " + (response.errorBody() != null ? response.errorBody().toString() : "null"));
-                if (response.isSuccessful() && response.body() != null) {
-                    List<ProductItem> products = response.body().getItems();
-                    adapter = new ProductAdapter(products);
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    Toast.makeText(HomeActivity.this, "Failed to load products", Toast.LENGTH_SHORT).show();
-                }
-            }
+        if (itemId == R.id.nav_shop) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new ShopFragment())
+                    .commit();
+            return true;
+        } else if (itemId == R.id.nav_cart) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new CartFragment())
+                    .commit();
+            return true;
+        } else if (itemId == R.id.nav_chat) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new ChatFragment())
+                    .commit();
+            return true;
+        } else if (itemId == R.id.nav_alerts) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new AlertFragment())
+                    .commit();
+            return true;
+        } else if (itemId == R.id.nav_map) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MapFragment())
+                    .commit();
+            return true;
+        }
 
-            @Override
-            public void onFailure(Call<ProductListResponse> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.e("API_ERROR", "Error: " + t.getMessage());
-                Toast.makeText(HomeActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
-            }
-        });
+        return false;
     }
 }
