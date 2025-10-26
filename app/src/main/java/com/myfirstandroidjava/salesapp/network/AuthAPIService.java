@@ -1,8 +1,8 @@
 package com.myfirstandroidjava.salesapp.network;
 
-import com.myfirstandroidjava.salesapp.model.LoginRequest;
-import com.myfirstandroidjava.salesapp.model.LoginResponse;
-import com.myfirstandroidjava.salesapp.model.RegisterRequest;
+import com.myfirstandroidjava.salesapp.RegisterRequest;
+import com.myfirstandroidjava.salesapp.models.LoginRequest;
+import com.myfirstandroidjava.salesapp.models.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

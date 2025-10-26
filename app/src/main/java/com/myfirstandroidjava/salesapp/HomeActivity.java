@@ -1,4 +1,4 @@
-package com.myfirstandroidjava.salesapp.activity;
+package com.myfirstandroidjava.salesapp;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,10 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.myfirstandroidjava.salesapp.R;
-import com.myfirstandroidjava.salesapp.adapter.ProductAdapter;
-import com.myfirstandroidjava.salesapp.model.ProductItem;
-import com.myfirstandroidjava.salesapp.model.ProductListResponse;
+import com.myfirstandroidjava.salesapp.adapters.ProductAdapter;
+import com.myfirstandroidjava.salesapp.models.ProductItem;
+import com.myfirstandroidjava.salesapp.models.ProductListResponse;
 import com.myfirstandroidjava.salesapp.network.ProductAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
 

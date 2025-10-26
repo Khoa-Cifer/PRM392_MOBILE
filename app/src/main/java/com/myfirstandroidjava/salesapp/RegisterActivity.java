@@ -1,4 +1,4 @@
-package com.myfirstandroidjava.salesapp.activity;
+package com.myfirstandroidjava.salesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.myfirstandroidjava.salesapp.R;
-import com.myfirstandroidjava.salesapp.model.LoginResponse;
-import com.myfirstandroidjava.salesapp.model.RegisterRequest;
+import com.myfirstandroidjava.salesapp.models.LoginResponse;
 import com.myfirstandroidjava.salesapp.network.AuthAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
 

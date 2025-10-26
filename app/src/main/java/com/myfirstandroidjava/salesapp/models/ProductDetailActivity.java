@@ -1,4 +1,4 @@
-package com.myfirstandroidjava.salesapp.activity;
+package com.myfirstandroidjava.salesapp.models;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.myfirstandroidjava.salesapp.R;
-import com.myfirstandroidjava.salesapp.model.ProductDetailResponse;
 import com.myfirstandroidjava.salesapp.network.ProductAPIService;
+import com.myfirstandroidjava.salesapp.R;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
 
 import retrofit2.Call;

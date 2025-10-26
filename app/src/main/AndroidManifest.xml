@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         android:usesCleartextTraffic="true"> <activity
-            android:name=".activity.HomeActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +24,15 @@
         </activity>
 
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".RegisterActivity"
             android:exported="false" />
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
 
         <activity
-            android:name=".activity.ProductDetailActivity"
+            android:name=".models.ProductDetailActivity"
             android:exported="false" />
 
     </application>

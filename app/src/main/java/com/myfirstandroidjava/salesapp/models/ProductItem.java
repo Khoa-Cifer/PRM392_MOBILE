@@ -1,4 +1,4 @@
-package com.myfirstandroidjava.salesapp.model;
+package com.myfirstandroidjava.salesapp.models;
 
 public class ProductItem {
     private int productID;

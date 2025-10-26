@@ -1,7 +1,7 @@
 package com.myfirstandroidjava.salesapp.network;
 
-import com.myfirstandroidjava.salesapp.model.ProductDetailResponse;
-import com.myfirstandroidjava.salesapp.model.ProductListResponse;
+import com.myfirstandroidjava.salesapp.models.ProductDetailResponse;
+import com.myfirstandroidjava.salesapp.models.ProductListResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
