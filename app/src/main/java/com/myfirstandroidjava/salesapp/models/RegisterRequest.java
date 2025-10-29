@@ -1,4 +1,4 @@
-package com.myfirstandroidjava.salesapp;
+package com.myfirstandroidjava.salesapp.models;
 
 public class RegisterRequest {
     private String username;

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.myfirstandroidjava.salesapp.models.LoginResponse;
+import com.myfirstandroidjava.salesapp.models.RegisterRequest;
 import com.myfirstandroidjava.salesapp.network.AuthAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
 
