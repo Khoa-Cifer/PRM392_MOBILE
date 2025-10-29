@@ -1,50 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp"
-    tools:context=".activity.LoginActivity">
+    android:background="@drawable/bg_gradient"
+    tools:context=".LoginActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="24sp"
-        android:layout_marginBottom="24dp"/>
-
-    <EditText
-        android:id="@+id/editTextUsername"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:inputType="text"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_marginTop="8dp"/>
+        <!-- Header (Reusable) -->
+        <com.myfirstandroidjava.salesapp.components.HeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:headerTitle="Login" />
 
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_marginTop="16dp"/>
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ShopHub"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginTop="40dp" />
 
-    <TextView
-        android:id="@+id/textViewRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Don't have an account? Register here."
-        android:textColor="@android:color/holo_blue_dark"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome back"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp" />
 
-</LinearLayout>
+        <!-- Card Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:padding="20dp"
+            android:elevation="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:clipToOutline="true"
+            android:backgroundTintMode="src_in"
+            android:backgroundTint="@android:color/white"
+            android:layout_marginHorizontal="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textStyle="bold"
+                android:textColor="#333" />
+
+            <EditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="yourusername"
+                android:inputType="text"
+                android:drawableStart="@android:drawable/ic_dialog_email"
+                android:padding="10dp"
+                android:background="@drawable/bg_input"
+                android:layout_marginTop="4dp" />
+
+            <!-- Password -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textStyle="bold"
+                android:textColor="#333"
+                android:layout_marginTop="12dp" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="••••••"
+                android:inputType="textPassword"
+                android:drawableStart="@android:drawable/ic_lock_idle_lock"
+                android:padding="10dp"
+                android:background="@drawable/bg_input"
+                android:layout_marginTop="4dp" />
+
+            <!-- Login Button -->
+            <Button
+                android:id="@+id/buttonLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#4A3AFF"
+                android:textColor="@android:color/white" />
+
+            <!-- Register -->
+            <TextView
+                android:id="@+id/textViewRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account? Register"
+                android:textColor="#4A3AFF"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
