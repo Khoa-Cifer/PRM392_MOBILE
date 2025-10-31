@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.myfirstandroidjava.salesapp.models.ProductDetailActivity;
+import com.myfirstandroidjava.salesapp.ProductDetailActivity;
 import com.myfirstandroidjava.salesapp.models.ProductItem;
 import com.myfirstandroidjava.salesapp.R;
 

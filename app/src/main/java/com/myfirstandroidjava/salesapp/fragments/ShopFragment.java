@@ -25,6 +25,7 @@ import com.myfirstandroidjava.salesapp.models.ProductListResponse;
 import com.myfirstandroidjava.salesapp.network.AuthAPIService;
 import com.myfirstandroidjava.salesapp.network.ProductAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
+import com.myfirstandroidjava.salesapp.utils.TokenManager;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
-        productAPIService = RetrofitClient.getClient().create(ProductAPIService.class);
+        productAPIService = RetrofitClient.getClient(requireContext()).create(ProductAPIService.class);
 
         recyclerView = view.findViewById(R.id.recyclerViewProducts);
         progressBar = view.findViewById(R.id.progressBar);
@@ -51,10 +52,15 @@ public class ShopFragment extends Fragment {
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        btnLoginRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-        });
+        TokenManager manager = new TokenManager(requireContext());
+        String token = manager.getToken();
+        if (token != null) {
+            btnLoginRegister.setVisibility(View.GONE);
+            btnLoginRegister.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            });
+        }
 
         loadProducts();
 

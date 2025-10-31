@@ -15,6 +15,7 @@ import com.myfirstandroidjava.salesapp.models.LoginRequest;
 import com.myfirstandroidjava.salesapp.models.LoginResponse;
 import com.myfirstandroidjava.salesapp.network.AuthAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
+import com.myfirstandroidjava.salesapp.utils.TokenManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         Button buttonLogin = findViewById(R.id.buttonLogin);
         TextView textViewRegister = findViewById(R.id.textViewRegister);
 
-        authAPIService = RetrofitClient.getClient().create(AuthAPIService.class);
+        authAPIService = RetrofitClient.getClient(this).create(AuthAPIService.class);
 
         buttonLogin.setOnClickListener(v -> loginUser());
 
@@ -62,10 +63,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String token = response.body().getToken();
+                    // Save token
+                    TokenManager tokenManager = new TokenManager(LoginActivity.this);
+                    tokenManager.saveToken(token);
                     Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    Log.d("LOGIN_SUCCESS", "Token: " + token);
-
-                    // TODO: Save the token (e.g., in SharedPreferences)
 
                     // Navigate to HomeActivity
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);

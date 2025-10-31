@@ -3,16 +3,22 @@ package com.myfirstandroidjava.salesapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.myfirstandroidjava.salesapp.models.LoginResponse;
+import com.myfirstandroidjava.salesapp.models.ProductDetailResponse;
 import com.myfirstandroidjava.salesapp.models.RegisterRequest;
 import com.myfirstandroidjava.salesapp.network.AuthAPIService;
+import com.myfirstandroidjava.salesapp.network.ProductAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
 
 import retrofit2.Call;
@@ -39,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister);
         textViewLogin = findViewById(R.id.textViewLogin);
 
-        authAPIService = RetrofitClient.getClient().create(AuthAPIService.class);
+        authAPIService = RetrofitClient.getClient(this).create(AuthAPIService.class);
 
         buttonRegister.setOnClickListener(v -> registerUser());
 
