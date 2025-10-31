@@ -1,6 +1,7 @@
 package com.myfirstandroidjava.salesapp.network;
 
 import com.myfirstandroidjava.salesapp.models.AddToCartRequest;
+import com.myfirstandroidjava.salesapp.models.AddToCartResponse;
 import com.myfirstandroidjava.salesapp.models.LoginRequest;
 import com.myfirstandroidjava.salesapp.models.LoginResponse;
 import com.myfirstandroidjava.salesapp.models.ProductDetailResponse;
@@ -23,6 +24,6 @@ public interface ProductAPIService {
     @GET("products/{id}")
     Call<ProductDetailResponse> getProductDetail(@Path("id") int id);
 
-    @POST("Cart/add-to-card")
-    Call<String> addToCart(@Body AddToCartRequest addToCartRequest);
+    @POST("Cart/add-to-cart")
+    Call<AddToCartResponse> addToCart(@Body AddToCartRequest addToCartRequest);
 }
