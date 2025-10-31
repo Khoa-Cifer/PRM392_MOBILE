@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.myfirstandroidjava.salesapp.models.AddToCartRequest;
 import com.myfirstandroidjava.salesapp.models.AddToCartResponse;
 import com.myfirstandroidjava.salesapp.models.ProductDetailResponse;
+import com.myfirstandroidjava.salesapp.network.CartAPIService;
 import com.myfirstandroidjava.salesapp.network.ProductAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
 import com.myfirstandroidjava.salesapp.utils.TokenManager;
@@ -30,6 +31,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button btnAddToCart;
     private ProductAPIService productAPIService;
+    private CartAPIService cartAPIService;
     private TokenManager tokenManager;
     private int productId;
 
@@ -47,6 +49,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.btnAddToCart);
 
         productAPIService = RetrofitClient.getClient(this).create(ProductAPIService.class);
+        cartAPIService = RetrofitClient.getClient(this).create(CartAPIService.class);
 
         productId = getIntent().getIntExtra("productId", -1);
         if (productId != -1) {
@@ -109,7 +112,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnAddToCart.setEnabled(false);
 
         AddToCartRequest request = new AddToCartRequest(productId, 1);
-        productAPIService.addToCart(request).enqueue(new Callback<AddToCartResponse>() {
+        cartAPIService.addToCart(request).enqueue(new Callback<AddToCartResponse>() {
             @Override
             public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
                 progressBar.setVisibility(View.GONE);

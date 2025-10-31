@@ -54,11 +54,28 @@ public class ShopFragment extends Fragment {
 
         TokenManager manager = new TokenManager(requireContext());
         String token = manager.getToken();
-        if (token != null) {
-            btnLoginRegister.setVisibility(View.GONE);
+        if (token == null) {
+            // Show Login/Register button
+            btnLoginRegister.setText("Login / Register");
+            btnLoginRegister.setVisibility(View.VISIBLE);
+
             btnLoginRegister.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+            });
+
+        } else {
+            // Show Logout button
+            btnLoginRegister.setText("Logout");
+            btnLoginRegister.setVisibility(View.VISIBLE);
+
+            btnLoginRegister.setOnClickListener(v -> {
+                manager.clearToken(); // Remove token from shared prefs
+
+                Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+                // Optionally refresh fragment to update UI
+                requireActivity().recreate();
             });
         }
 
