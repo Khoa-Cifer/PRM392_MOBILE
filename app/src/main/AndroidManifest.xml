@@ -23,6 +23,22 @@
         </activity>
 
         <activity
+            android:name=".PayPalRedirectActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="myapp" android:host="paypal" android:path="/success" />
+                <data android:scheme="myapp" android:host="paypal" android:path="/cancel" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
 
