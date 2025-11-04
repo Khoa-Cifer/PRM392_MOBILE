@@ -46,7 +46,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         });
 
         Glide.with(holder.itemView.getContext())
-                .load("http://192.168.1.235:7002" + product.getImageURL())
+                .load("http://172.20.10.3:7002" + product.getImageURL())
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.image_error)
                 .into(holder.imageProduct);

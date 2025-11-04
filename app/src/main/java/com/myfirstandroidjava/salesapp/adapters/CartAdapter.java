@@ -41,7 +41,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         // Load product image with Glide
         Glide.with(holder.itemView.getContext())
-                .load("http://192.168.1.235:7002" + item.getImageUrl()) // If your API returns a relative path, prepend your base URL
+                .load("http://172.20.10.3:7002" + item.getImageUrl()) // If your API returns a relative path, prepend your base URL
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.image_error)
                 .into(holder.imgProduct);

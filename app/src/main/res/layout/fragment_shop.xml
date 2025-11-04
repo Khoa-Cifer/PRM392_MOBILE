@@ -17,7 +17,8 @@
 
         <TextView
             android:id="@+id/tvShopTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="SalesShop"
             android:textSize="20sp"
@@ -33,7 +34,18 @@
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:background="@android:color/transparent"
-            android:paddingEnd="8dp"/>
+            android:paddingEnd="8dp" />
+
+        <ImageView
+            android:id="@+id/btnOrders"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_baseline_shopping_bag_24"
+            android:contentDescription="Orders"
+            android:tint="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"/>
     </LinearLayout>
 
     <!-- Search Bar -->

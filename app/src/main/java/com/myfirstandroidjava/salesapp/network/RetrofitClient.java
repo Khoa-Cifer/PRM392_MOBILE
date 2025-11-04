@@ -17,7 +17,7 @@ public class RetrofitClient {
 
     // Make sure to use your computer's IP address, not localhost
     // 10.0.2.2 is the special alias for the Android emulator to access the host machine's localhost
-    private static final String BASE_URL = "http://192.168.1.235:7002/api/";
+    private static final String BASE_URL = "http://172.20.10.3:7002/api/";
 
     private static Retrofit retrofit = null;
 
