@@ -1,18 +1,12 @@
 package com.myfirstandroidjava.salesapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.myfirstandroidjava.salesapp.adapters.ProductAdapter;
 import com.myfirstandroidjava.salesapp.fragments.AlertFragment;
 import com.myfirstandroidjava.salesapp.fragments.CartFragment;
 import android.content.Intent;
@@ -32,7 +26,6 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
 
-        // Default: open Shop (Home) page
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new ShopFragment())
                 .commit();

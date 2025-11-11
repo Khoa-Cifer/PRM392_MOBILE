@@ -9,6 +9,10 @@ public class CreateOrderRequest {
         this.billingAddress = billingAddress;
     }
 
+    public CreateOrderRequest() {
+
+    }
+
     // Getters and setters
     public String getPaymentMethod() { return paymentMethod; }
     public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }

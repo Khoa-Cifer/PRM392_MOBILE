@@ -10,8 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.myfirstandroidjava.salesapp.models.CaptureRequest;
 import com.myfirstandroidjava.salesapp.models.CaptureResponse;
+import com.myfirstandroidjava.salesapp.network.OrderAPIService;
 import com.myfirstandroidjava.salesapp.network.PayPalAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
+import com.myfirstandroidjava.salesapp.utils.OrderManager;
 import com.myfirstandroidjava.salesapp.utils.TokenManager;
 
 import retrofit2.Call;
@@ -20,7 +22,6 @@ import retrofit2.Response;
 
 public class PayPalRedirectActivity extends AppCompatActivity {
     private PayPalAPIService payPalAPIService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class PayPalRedirectActivity extends AppCompatActivity {
         TokenManager tokenManager = new TokenManager(this);
         String token = tokenManager.getToken();
         payPalAPIService = RetrofitClient.getClient(this, token).create(PayPalAPIService.class);
+        orderAPIService = RetrofitClient.getClient(this, token).create(OrderAPIService.class);
 
         handleIntent(getIntent());
     }
@@ -51,12 +53,17 @@ public class PayPalRedirectActivity extends AppCompatActivity {
         }
     }
 
-    private void captureOrder(String orderId) {
-        payPalAPIService.captureOrder(new CaptureRequest(orderId)).enqueue(new Callback<CaptureResponse>() {
+    private void captureOrder(String token) {
+        payPalAPIService.captureOrder(new CaptureRequest(token)).enqueue(new Callback<CaptureResponse>() {
             @Override
             public void onResponse(Call<CaptureResponse> call, Response<CaptureResponse> response) {
                 if (response.isSuccessful() && response.body().success) {
                     Toast.makeText(PayPalRedirectActivity.this, "Payment success!", Toast.LENGTH_LONG).show();
+                    OrderManager orderManager = new OrderManager();
+                    String orderId = orderManager.getOrderId();
+                    Intent intent = new Intent(PayPalRedirectActivity.this, OrderSuccessActivity.class);
+                    intent.putExtra("orderId", orderId); // pass the orderId
+                    startActivity(intent);
                 } else {
                     Toast.makeText(PayPalRedirectActivity.this, "Capture failed", Toast.LENGTH_LONG).show();
                 }

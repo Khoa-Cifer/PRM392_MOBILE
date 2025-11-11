@@ -1,11 +1,15 @@
 package com.myfirstandroidjava.salesapp.fragments;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,11 +19,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.myfirstandroidjava.salesapp.OrderSuccessActivity;
 import com.myfirstandroidjava.salesapp.R;
 import com.myfirstandroidjava.salesapp.adapters.CartAdapter;
 import com.myfirstandroidjava.salesapp.models.CartListResponse;
+import com.myfirstandroidjava.salesapp.models.CreateOrderRequest;
+import com.myfirstandroidjava.salesapp.models.Order;
+import com.myfirstandroidjava.salesapp.models.OrderResponse;
 import com.myfirstandroidjava.salesapp.network.CartAPIService;
+import com.myfirstandroidjava.salesapp.network.OrderAPIService;
 import com.myfirstandroidjava.salesapp.network.RetrofitClient;
+import com.myfirstandroidjava.salesapp.utils.OrderManager;
 import com.myfirstandroidjava.salesapp.utils.TokenManager;
 
 import retrofit2.Call;
@@ -36,6 +46,7 @@ public class CartFragment extends Fragment {
     private TextView tvTotal;
     private Button btnCheckout;
     private CartAPIService cartAPIService;
+    private OrderAPIService orderAPIService;
     private ArrayList<CartItem> cartItems;
     private double totalCartPrice;
 
@@ -53,15 +64,13 @@ public class CartFragment extends Fragment {
         String token = tokenManager.getToken();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         cartAPIService = RetrofitClient.getClient(requireContext(), token).create(CartAPIService.class);
+        orderAPIService = RetrofitClient.getClient(requireContext(), token).create(OrderAPIService.class);
 
         fetchCartData();
 
         btnCheckout.setOnClickListener(v -> {
             if (cartItems != null && !cartItems.isEmpty()) {
-                Intent intent = new Intent(getActivity(), OrderActivity.class);
-                intent.putExtra("cartItems", cartItems);
-                intent.putExtra("totalPrice", totalCartPrice);
-                startActivity(intent);
+                showAddressInputDialog();
             } else {
                 Toast.makeText(getContext(), "Your cart is empty.", Toast.LENGTH_SHORT).show();
             }
@@ -91,6 +100,58 @@ public class CartFragment extends Fragment {
             @Override
             public void onFailure(Call<CartListResponse> call, Throwable t) {
                 t.printStackTrace();
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showAddressInputDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
+        builder.setTitle("Enter Delivery Address");
+
+        final android.widget.EditText input = new android.widget.EditText(getContext());
+        input.setHint("Enter your address");
+        input.setPadding(32, 16, 32, 16);
+        builder.setView(input);
+
+        builder.setPositiveButton("Confirm", (dialog, which) -> {
+            String address = input.getText().toString().trim();
+            if (address.isEmpty()) {
+                Toast.makeText(getContext(), "Address is required", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            createOrder(address);
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.show();
+    }
+
+    private void createOrder(String address) {
+        CreateOrderRequest request = new CreateOrderRequest();
+        request.setPaymentMethod("paypal");
+        request.setBillingAddress(address);
+
+        Call<OrderResponse> call = orderAPIService.createOrder(request);
+
+        call.enqueue(new Callback<OrderResponse>() {
+            @Override
+            public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    OrderResponse order = response.body();
+                    OrderManager orderManager = new OrderManager();
+                    orderManager.saveOrderId(order.getOrderId());
+                    // Navigate to OrderActivity with order info
+                    Intent intent = new Intent(getActivity(), OrderActivity.class);
+                    intent.putExtra("orderResponse", order);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "Failed to create order", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderResponse> call, Throwable t) {
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
