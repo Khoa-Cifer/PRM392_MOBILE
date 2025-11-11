@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister);
         textViewLogin = findViewById(R.id.textViewLogin);
 
-        authAPIService = RetrofitClient.getClient(this).create(AuthAPIService.class);
+        authAPIService = RetrofitClient.getClient(this, null).create(AuthAPIService.class);
 
         buttonRegister.setOnClickListener(v -> registerUser());
 
