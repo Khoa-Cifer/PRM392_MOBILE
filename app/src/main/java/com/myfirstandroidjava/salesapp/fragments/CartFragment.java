@@ -139,8 +139,8 @@ public class CartFragment extends Fragment {
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     OrderResponse order = response.body();
-                    OrderManager orderManager = new OrderManager();
-                    orderManager.saveOrderId(order.getOrderId());
+                    OrderManager orderManager = new OrderManager(getContext());
+                    orderManager.saveOrderId(String.valueOf(order.getOrderId()));
                     // Navigate to OrderActivity with order info
                     Intent intent = new Intent(getActivity(), OrderActivity.class);
                     intent.putExtra("orderResponse", order);
