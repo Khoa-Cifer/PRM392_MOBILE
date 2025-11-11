@@ -22,6 +22,8 @@ import retrofit2.Response;
 
 public class PayPalRedirectActivity extends AppCompatActivity {
     private PayPalAPIService payPalAPIService;
+    private OrderAPIService orderAPIService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,7 @@ public class PayPalRedirectActivity extends AppCompatActivity {
             public void onResponse(Call<CaptureResponse> call, Response<CaptureResponse> response) {
                 if (response.isSuccessful() && response.body().success) {
                     Toast.makeText(PayPalRedirectActivity.this, "Payment success!", Toast.LENGTH_LONG).show();
-                    OrderManager orderManager = new OrderManager();
+                    OrderManager orderManager = new OrderManager(PayPalRedirectActivity.this);
                     String orderId = orderManager.getOrderId();
                     Intent intent = new Intent(PayPalRedirectActivity.this, OrderSuccessActivity.class);
                     intent.putExtra("orderId", orderId); // pass the orderId
