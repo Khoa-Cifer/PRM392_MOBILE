@@ -13,7 +13,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
 import com.myfirstandroidjava.salesapp.fragments.ChatFragment;
-import com.myfirstandroidjava.salesapp.fragments.MapFragment;
+import com.myfirstandroidjava.salesapp.fragments.StoreLocationFragment;
 import com.myfirstandroidjava.salesapp.fragments.ShopFragment;
 import com.myfirstandroidjava.salesapp.services.FloatingBubbleService;
 
@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.nav_map) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new MapFragment())
+                    .replace(R.id.fragment_container, new StoreLocationFragment())
                     .commit();
             return true;
         }

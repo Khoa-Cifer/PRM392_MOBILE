@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit = null;
+    private static Retrofit publicRetrofit = null;
 
     public static Retrofit getClient(Context context, String token) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -43,6 +44,19 @@ public class RetrofitClient {
         }
 
         return retrofit;
+    }
+
+    public static Retrofit getClientPublic(Context context) {
+        if (publicRetrofit == null) {
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+            publicRetrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.BASE_URL + "api/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+        }
+        return publicRetrofit;
     }
 
     public static DeviceTokenAPIService getDeviceTokenAPIService(Context context) {
